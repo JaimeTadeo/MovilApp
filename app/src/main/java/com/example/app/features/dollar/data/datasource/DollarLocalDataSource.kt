@@ -19,7 +19,13 @@ class DollarLocalDataSource(
         dao.insertDollars(dollarEntity)
     }
     suspend fun insert(dollar: DollarModel) {
-        dao.insert(dollar.toEntity())
+        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
+        val now = dateFormat.format(java.util.Date())
+        val updatedDollar = dollar.copy(
+            usdt = "6.91",
+            usdc = "6.92",
+            fechaActualizacion = now
+        )
+        dao.insert(updatedDollar.toEntity())
     }
 }
-
