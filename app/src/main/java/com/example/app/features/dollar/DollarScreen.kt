@@ -102,32 +102,89 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel(), onNavigateB
                         Text("Cargando cotización...")
                     }
                     is DollarViewModel.DollarUIState.Success -> {
-                        Text(
-                            text = "Boliviano Oficial:",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Card(
+                                modifier = Modifier.weight(1f).padding(4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(8.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text("Oficial", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                    Text(
+                                        text = stateValue.data.dollarOficial ?: "Sin dato",
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.secondary
+                                    )
+                                }
+                            }
+                            Card(
+                                modifier = Modifier.weight(1f).padding(4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(8.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text("Paralelo", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                    Text(
+                                        text = stateValue.data.dollarParallelo ?: "Sin dato",
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.secondary
+                                    )
+                                }
+                            }
+                            Card(
+                                modifier = Modifier.weight(1f).padding(4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(8.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text("USDT", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                    Text(
+                                        text = stateValue.data.usdt ?: "Sin dato",
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.secondary
+                                    )
+                                }
+                            }
+                            Card(
+                                modifier = Modifier.weight(1f).padding(4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(8.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text("USDC", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                    Text(
+                                        text = stateValue.data.usdc ?: "Sin dato",
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.secondary
+                                    )
+                                }
+                            }
+                        }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = stateValue.data.dollarOficial ?: "Sin dato",
-                            fontSize = 36.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = "Boliviano Paralelo:",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = stateValue.data.dollarParallelo ?: "Sin dato",
-                            fontSize = 36.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.secondary
+                            text = "Actualizado: " + (stateValue.data.fechaActualizacion ?: "Sin fecha"),
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.align(Alignment.End)
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
@@ -147,7 +204,6 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel(), onNavigateB
             }
         }
         Spacer(modifier = Modifier.height(24.dp))
-        // Información adicional
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
