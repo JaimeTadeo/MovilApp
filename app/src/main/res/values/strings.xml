@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="login_title">Sé parte\ndel cambio</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="login_email_label">Correo Electrónico</string>
+    <string name="login_password_label">Contraseña</string>
+    <string name="login_remember_password">Recordar contraseña</string>
+    <string name="login_forgot_password">Olvidé mi Contraseña</string>
+    <string name="now_mobile">now\nmobile</string>
+    <string name="required_field">Dato Obligatorio</string>
+    <string name="forgot_password_title">El cambio\nha llegado&#8230;</string>
+    <string name="forgot_password_question">¿Olvidaste tu Contraseña?</string>
+    <string name="forgot_password_email_label">Email de Registro</string>
+    <string name="forgot_password_button">Recuperar Contraseña</string>
+
+    <!-- Error messages -->
+    <string name="error_network">Error de conexión a internet</string>
+    <string name="error_server">Error del servidor</string>
+    <string name="error_not_found">Recurso no encontrado</string>
+    <string name="error_empty_response">No hay contenido disponible</string>
+    <string name="error_unknown">Error desconocido</string>
+</resources>
