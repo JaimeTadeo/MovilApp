@@ -22,6 +22,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.example.app.features.movies.data.database.dao.IMovieDao
 
 val appModule = module {
     single<Retrofit>(qualifier = org.koin.core.qualifier.named("github")) {
@@ -60,6 +61,8 @@ val appModule = module {
     single<IGitHubRepository> { GitHubRepositoryImpl(get<IGitHubApiService>()) }
     single<IStockRepository> { StockRepositoryImpl(get<IStockApiService>()) }
     single<MoviesRemoteDataSource> { MoviesRemoteDataSource(get()) }
+    single<IMovieDao> { get<AppRoomDatabase>().movieDao() }
+    single<DollarLocalDataSource> { DollarLocalDataSource(get()) }
     single<IMoviesRepository> { MoviesRepository(get()) }
     single<MoviesRepository> { MoviesRepository(get()) }
 
@@ -73,7 +76,6 @@ val appModule = module {
     single { AppRoomDatabase.getDatabase(androidContext()) }
     single<IDollarDao> { get<AppRoomDatabase>().dollarDao() }
     single<com.example.app.features.dollar.datasource.RealTimeRemoteDataSource> { com.example.app.features.dollar.datasource.RealTimeRemoteDataSource() }
-    single<com.example.app.features.dollar.data.datasource.DollarLocalDataSource> { com.example.app.features.dollar.data.datasource.DollarLocalDataSource(get()) }
     single<com.example.app.domain.repository.IDollarRepository> { com.example.app.features.dollar.data.DollarRepository(get(), get()) }
     factory { com.example.app.domain.usecases.FetchDollarUseCase(get()) }
     viewModel { com.example.app.features.dollar.DollarViewModel(get()) }
