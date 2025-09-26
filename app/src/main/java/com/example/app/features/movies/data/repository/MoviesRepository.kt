@@ -5,9 +5,14 @@ import com.example.app.features.movies.data.error.DataException
 import com.example.app.features.movies.domain.error.Failure
 import com.example.app.features.movies.domain.model.MovieModel
 import com.example.app.features.movies.domain.repository.IMoviesRepository
+import com.example.app.features.movies.data.local.MovieDao
+import com.example.app.features.movies.data.local.MovieEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class MoviesRepository(
-    private val remoteDataSource: MoviesRemoteDataSource
+    private val remoteDataSource: MoviesRemoteDataSource,
+    private val movieDao: MovieDao // Nuevo parámetro para acceso local
 ) : IMoviesRepository {
 
     override suspend fun getPopularMovies(): Result<List<MovieModel>> {
@@ -48,5 +53,39 @@ class MoviesRepository(
 
     suspend fun deleteMovie(movieId: Int): Result<Unit> {
         return remoteDataSource.deleteMovie(movieId)
+    }
+
+    suspend fun saveMoviesLocally(movies: List<MovieModel>) {
+        withContext(Dispatchers.IO) {
+            val entities = movies.map {
+                MovieEntity(
+                    id = it.id,
+                    title = it.title,
+                    overview = it.overview,
+                    posterUrl = it.posterUrl,
+                    backdropUrl = it.backdropUrl,
+                    releaseDate = it.releaseDate,
+                    rating = it.rating,
+                    popularity = it.popularity
+                )
+            }
+            movieDao.deleteAllMovies()
+            movieDao.insertMovies(entities)
+        }
+    }
+
+    suspend fun getLocalMovies(): List<MovieModel> = withContext(Dispatchers.IO) {
+        movieDao.getAllMovies().map {
+            MovieModel(
+                id = it.id,
+                title = it.title,
+                overview = it.overview,
+                posterUrl = it.posterUrl,
+                backdropUrl = it.backdropUrl,
+                releaseDate = it.releaseDate,
+                rating = it.rating,
+                popularity = it.popularity
+            )
+        }
     }
 }

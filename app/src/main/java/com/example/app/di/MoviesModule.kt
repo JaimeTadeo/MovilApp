@@ -6,10 +6,13 @@ import com.example.app.features.movies.data.repository.MoviesRepository
 import com.example.app.features.movies.domain.repository.IMoviesRepository
 import com.example.app.features.movies.domain.usecase.GetPopularMoviesUseCase
 import com.example.app.features.movies.presentation.MoviesViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.example.app.features.movies.data.local.MoviesDatabase
+import com.example.app.features.movies.data.local.MovieDao
 
 val moviesModule = module {
     // API Service
@@ -24,8 +27,13 @@ val moviesModule = module {
     // Data Source
     single { MoviesRemoteDataSource(get()) }
 
+    // Room Database y DAO
+    single { MoviesDatabase.getDatabase(androidContext()) }
+    single<MovieDao> { get<MoviesDatabase>().movieDao() }
+
     // Repository
-    single<IMoviesRepository> { MoviesRepository(get()) }
+    single<IMoviesRepository> { MoviesRepository(get(), get()) }
+    single<MoviesRepository> { MoviesRepository(get(), get()) }
 
     // Use Case
     single { GetPopularMoviesUseCase(get()) }

@@ -63,8 +63,8 @@ val appModule = module {
     single<MoviesRemoteDataSource> { MoviesRemoteDataSource(get()) }
     single<IMovieDao> { get<AppRoomDatabase>().movieDao() }
     single<DollarLocalDataSource> { DollarLocalDataSource(get()) }
-    single<IMoviesRepository> { MoviesRepository(get()) }
-    single<MoviesRepository> { MoviesRepository(get()) }
+    single<IMoviesRepository> { MoviesRepository(get(), get()) }
+    single<MoviesRepository> { MoviesRepository(get(), get()) }
 
     factory { FindByNickname(get<IGitHubRepository>()) }
     factory { GetPopularMoviesUseCase(get<IMoviesRepository>()) }

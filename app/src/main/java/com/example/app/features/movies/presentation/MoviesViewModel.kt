@@ -38,7 +38,12 @@ class MoviesViewModel(
 
             result.fold(
                 onSuccess = { movies ->
-                    _state.value = MoviesStateUI.Success(movies)
+                    try {
+                        repository.saveMoviesLocally(movies) // Guardar localmente
+                        _state.value = MoviesStateUI.Success(movies)
+                    } catch (e: Exception) {
+                        _state.value = MoviesStateUI.Error(Failure.Unknown(Exception("Error al guardar en la base de datos local: ${e.localizedMessage}")))
+                    }
                 },
                 onFailure = {
                     _state.value = MoviesStateUI.Error(failure = it as Failure)
@@ -97,4 +102,3 @@ class MoviesViewModel(
         }
     }
 }
-
